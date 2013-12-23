@@ -1,0 +1,1 @@
+This is javascript tutorial project. Focus on coding skills.
