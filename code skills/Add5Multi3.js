@@ -10,19 +10,19 @@
  *
  * Solution: Let us look at a the calls to find that are made when searching for a solution for the number 13:
 
- find(1, "1")
- find(6, "(1 + 5)")
- find(11, "((1 + 5) + 5)")
- find(16, "(((1 + 5) + 5) + 5)")
- too big
- find(33, "(((1 + 5) + 5) * 3)")
- too big
- find(18, "((1 + 5) * 3)")
- too big
- find(3, "(1 * 3)")
- find(8, "((1 * 3) + 5)")
- find(13, "(((1 * 3) + 5) + 5)")
- found!
+         find(1, "1")
+            find(6, "(1 + 5)")
+                find(11, "((1 + 5) + 5)")
+                    find(16, "(((1 + 5) + 5) + 5)")
+                        too big
+                    find(33, "(((1 + 5) + 5) * 3)")
+                        too big
+                find(18, "((1 + 5) * 3)")
+                    too big
+            find(3, "(1 * 3)")
+                find(8, "((1 * 3) + 5)")
+                    find(13, "(((1 * 3) + 5) + 5)")
+                        found!
  * User: JackyZhang
  * Date: 13-12-24
  */
@@ -37,7 +37,6 @@
                 return find(start + 5, "(" + history + " + 5)") ||
                     find(start * 3, "(" + history + " * 3)");
         }
-
         return find(1, "1");
     }
 
