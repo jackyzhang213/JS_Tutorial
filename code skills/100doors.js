@@ -24,8 +24,8 @@
         }
     }
 
-    for(i = 1; i <= n; i++) {
-        if(doors[i]) {
+    for (i = 1; i <= n; i++) {
+        if (doors[i]) {
             console.log("The " + i + " door opened");
         }
     }
