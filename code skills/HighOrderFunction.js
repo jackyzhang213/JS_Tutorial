@@ -70,8 +70,7 @@
     }));
 
     //Array filter Polyfill, learn purpose.
-    if (!Array.prototype.filter)
-    {
+    if (!Array.prototype.filter){
         Array.prototype.filter = function(fun /*, thisArg */)
         {
             "use strict";
@@ -103,6 +102,27 @@
             }
 
             return res;
-        };
+        }
     }
+
+    //Array build-in reduce sample
+    console.log( ancestry.reduce(function(min, cur) {
+        if (cur.born < min.born) return cur
+        else return min;
+    }));
+
+    //composite Array build-in
+    function average(array) {
+        function plus(a, b) { return a + b; }
+        return array.reduce(plus) / array.length;
+    }
+    function age(p) { return p.died - p.born; }
+    function male(p) { return p.sex == "m"; }
+    function female(p) { return p.sex == "f"; }
+
+    console.log(average(ancestry.filter(male).map(age)));
+// → 61.67
+    console.log(average(ancestry.filter(female).map(age)));
+// → 54.56
+
 } ());
