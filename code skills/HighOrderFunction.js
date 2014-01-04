@@ -1,5 +1,12 @@
 /**
- * Problem:
+ * Problem: High Order function
+ *
+ * Array forEach: to do something with each element in an array
+ *       map: build a new array where each element has been put through a function
+ *       reduce: to combine all the elements in the array into a single value.
+ *
+ * Functions apply: can be used to call them with an array specifying their arguments.
+ *           bind: which is used to create a partially applied version of the function.
  *
  * User: JackyZhang213
  * Date: 14-1-3
@@ -124,5 +131,11 @@
 // → 61.67
     console.log(average(ancestry.filter(female).map(age)));
 // → 54.56
+
+    //flattening
+    var arrays = [[1, 2, 3], [4, 5], [6]];
+    console.log(arrays.reduce(function(min, cur) {
+        return min.concat(cur);
+    }));
 
 } ());
