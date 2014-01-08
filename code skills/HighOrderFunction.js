@@ -4,6 +4,8 @@
  * Array forEach: to do something with each element in an array
  *       map: build a new array where each element has been put through a function
  *       reduce: to combine all the elements in the array into a single value.
+ *       every: there is no way to stop or break a forEach loop. The solution is to use Array.every or Array.some.
+ *              every is like &&, some is like ||
  *
  * Functions apply: can be used to call them with an array specifying their arguments.
  *           bind: which is used to create a partially applied version of the function.
@@ -137,5 +139,72 @@
     console.log(arrays.reduce(function(min, cur) {
         return min.concat(cur);
     }));
+
+    //every: first thought, I think it should use reduce, like following, but when second round reduce
+    //if will execute f(true) or f(false). That's not expected.
+    //    function every(arr, f) {
+    //        return arr.reduce(function(min, cur) {
+    //            console.log(min, cur);
+    //            return f(min) && f(cur);
+    //        })
+    //    }
+
+    // Your code here.
+    function every(arr, f) {
+        for(var i=0; i < arr.length; i++) {
+            if(!f(arr[i])) return false;
+        }
+        return true;
+    }
+
+    function some(arr, f) {
+        for(var i=0; i < arr.length; i++) {
+            if(f(arr[i])) return true;
+        }
+        return false;
+    }
+    console.log(every([NaN, NaN, NaN], isNaN));
+    // → true
+    console.log(every([NaN, NaN, 4], isNaN));
+    // → false
+    console.log(some([NaN, 3, 4], isNaN));
+    // → true
+    console.log(some([2, 3, 4], isNaN));
+    // → false
+
+    //how to stop a loop
+    var THRESHOLD = 12;
+    var v = [5, 2, 16, 4, 3, 18, 20];
+    var res;
+
+    res = v.every(function(element, index, array) {
+        console.log("element:", element);
+        if (element >= THRESHOLD) {
+            return false;
+        }
+
+        return true;
+    });
+    console.log("res:", res);
+    // logs:
+    // element: 5
+    // element: 2
+    // element: 16
+    // res: false
+
+    res = v.some(function(element, index, array) {
+        console.log("element:", element);
+        if (element >= THRESHOLD) {
+            return true;
+        }
+
+        return false;
+    });
+    console.log("res:", res);
+    // logs:
+    // element: 5
+    // element: 2
+    // element: 16
+    // res: true
 
 } ());
