@@ -16,8 +16,8 @@
 (function () {
     function range(from, to, step) {
         var i, arr = [];
-        if(arguments.length == 2) {
-            if(from > to) {
+        if (arguments.length === 2) {
+            if (from > to) {
                 step = -1;
             } else {
                 step = 1;
@@ -25,12 +25,12 @@
 
         }
 
-        if(from < to) {
-            for(i = from; i <= to; i+=step) {
+        if (from < to) {
+            for (i = from; i <= to; i += step) {
                 arr.push(i);
             }
         } else {
-            for(i = from; i >= to; i+=step) {
+            for (i = from; i >= to; i += step) {
                 arr.push(i);
             }
         }
@@ -39,17 +39,16 @@
     }
 
     function sum(arr) {
-        var i, sumNum=0;
-        for(i = 0; i < arr.length; i++) {
+        var i, sumNum = 0;
+        for (i = 0; i < arr.length; i++) {
             sumNum += arr[i];
         }
         return sumNum;
     }
 
-
     console.log(sum(range(1, 10)));
-// → 55
+    // → 55
     console.log(range(5, 2, -1));
-// → [5, 4, 3, 2]
-    console.log(range(5,2));
+    // → [5, 4, 3, 2]
+    console.log(range(5, 2));
 }());

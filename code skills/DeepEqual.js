@@ -9,23 +9,22 @@
 (function () {
 
     /*
-        Fast and limited.
-        Works when you have simple JSON-style objects without methods and DOM nodes inside:
+     Fast and limited.
+     Works when you have simple JSON-style objects without methods and DOM nodes inside:
      */
     function compareByJson(obj1, obj2) {
         return JSON.stringify(obj1) === JSON.stringify(obj2);
     }
 
-
     /*
-        Slow and more generic.
-        Compares objects without digging into prototypes, then compares properties' projections recursively,
-        and also compares constructors.
+     Slow and more generic.
+     Compares objects without digging into prototypes, then compares properties' projections recursively,
+     and also compares constructors.
      */
-    function deepCompare () {
+    function deepCompare() {
         var leftChain, rightChain;
 
-        function compare2Objects (x, y) {
+        function compare2Objects(x, y) {
             var p;
 
             // remember that NaN === NaN returns false
@@ -44,11 +43,9 @@
             // Works in case when functions are created in constructor.
             // Comparing dates is a common scenario. Another built-ins?
             // We can even handle functions passed across iframes
-            if ((typeof x === 'function' && typeof y === 'function') ||
-                (x instanceof Date && y instanceof Date) ||
-                (x instanceof RegExp && y instanceof RegExp) ||
-                (x instanceof String && y instanceof String) ||
-                (x instanceof Number && y instanceof Number)) {
+            if ((typeof x === 'function' && typeof y === 'function') || (x instanceof Date && y instanceof Date) ||
+                    (x instanceof RegExp && y instanceof RegExp) || (x instanceof String && y instanceof String) ||
+                    (x instanceof Number && y instanceof Number)) {
                 return x.toString() === y.toString();
             }
 
@@ -80,7 +77,7 @@
                 if (y.hasOwnProperty(p) !== x.hasOwnProperty(p)) {
                     return false;
                 }
-                else if (typeof y[p] !== typeof x[p]) {
+                if (typeof y[p] !== typeof x[p]) {
                     return false;
                 }
             }
@@ -89,30 +86,30 @@
                 if (y.hasOwnProperty(p) !== x.hasOwnProperty(p)) {
                     return false;
                 }
-                else if (typeof y[p] !== typeof x[p]) {
+                if (typeof y[p] !== typeof x[p]) {
                     return false;
                 }
 
                 switch (typeof (x[p])) {
-                    case 'object':
-                    case 'function':
+                case 'object':
+                case 'function':
 
-                        leftChain.push(x);
-                        rightChain.push(y);
+                    leftChain.push(x);
+                    rightChain.push(y);
 
-                        if (!compare2Objects (x[p], y[p])) {
-                            return false;
-                        }
+                    if (!compare2Objects(x[p], y[p])) {
+                        return false;
+                    }
 
-                        leftChain.pop();
-                        rightChain.pop();
-                        break;
+                    leftChain.pop();
+                    rightChain.pop();
+                    break;
 
-                    default:
-                        if (x[p] !== y[p]) {
-                            return false;
-                        }
-                        break;
+                default:
+                    if (x[p] !== y[p]) {
+                        return false;
+                    }
+                    break;
                 }
             }
 
@@ -136,8 +133,6 @@
 
         return true;
     }
-
-
 
     var obj1 = {here: {is: "an"}, object: 2};
     var obj2 = {here: {is: "an"}, object: 2};

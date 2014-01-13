@@ -13,7 +13,7 @@
  * User: JackyZhang213
  * Date: 14-1-3
  */
-(function() {
+(function () {
     var ANCESTRY_FILE = "[\n  " + [
         '{"name": "Emma de Milliano", "sex": "f", "born": 1876, "died": 1956, "father": "Petrus de Milliano", "mother": "Sophia van Damme"}',
         '{"name": "Carolus Haverbeke", "sex": "m", "born": 1832, "died": 1905, "father": "Carel Haverbeke", "mother": "Maria van Brussel"}',
@@ -61,43 +61,43 @@
 
     //sample filter implementation
     function filter(array, test) {
-        var passed = [];
-        for (var i = 0; i < array.length; i++) {
-            if (test(array[i]))
+        var i, passed = [];
+        for (i = 0; i < array.length; i++) {
+            if (test(array[i])) {
                 passed.push(array[i]);
+            }
         }
         return passed;
     }
 
-    console.log(filter(ancestry, function(person) {
+    console.log(filter(ancestry, function (person) {
         return person.born > 1900 && person.born < 1925;
     }));
 
     //invoke the Array build in function
-    console.log(ancestry.filter(function(person) {
+    console.log(ancestry.filter(function (person) {
         return person.born > 1900 && person.born < 1925;
     }));
 
     //Array filter Polyfill, learn purpose.
-    if (!Array.prototype.filter){
-        Array.prototype.filter = function(fun /*, thisArg */)
-        {
+    if (!Array.prototype.filter) {
+        Array.prototype.filter = function (fun /*, thisArg */) {
             "use strict";
 
-            if (this === void 0 || this === null)
+            if (this === void 0 || this === null) {
                 throw new TypeError();
+            }
 
             var t = Object(this);
             var len = t.length >>> 0;
-            if (typeof fun != "function")
+            if (typeof fun != "function") {
                 throw new TypeError();
+            }
 
             var res = [];
             var thisArg = arguments.length >= 2 ? arguments[1] : void 0;
-            for (var i = 0; i < len; i++)
-            {
-                if (i in t)
-                {
+            for (var i = 0; i < len; i++) {
+                if (i in t) {
                     var val = t[i];
 
                     // NOTE: Technically this should Object.defineProperty at
@@ -105,8 +105,9 @@
                     //       properties on Object.prototype and Array.prototype.
                     //       But that method's new, and collisions should be
                     //       rare, so use the more-compatible alternative.
-                    if (fun.call(thisArg, val, i, t))
+                    if (fun.call(thisArg, val, i, t)) {
                         res.push(val);
+                    }
                 }
             }
 
@@ -115,28 +116,48 @@
     }
 
     //Array build-in reduce sample
-    console.log( ancestry.reduce(function(min, cur) {
-        if (cur.born < min.born) return cur
-        else return min;
+    console.log(ancestry.reduce(function (min, cur) {
+        if (cur.born < min.born) {
+            return cur
+        }
+        else {
+            return min;
+        }
     }));
 
     //composite Array build-in
     function average(array) {
-        function plus(a, b) { return a + b; }
+        function plus(a, b) {
+            return a + b;
+        }
+
         return array.reduce(plus) / array.length;
     }
-    function age(p) { return p.died - p.born; }
-    function male(p) { return p.sex == "m"; }
-    function female(p) { return p.sex == "f"; }
+
+    function age(p) {
+        return p.died - p.born;
+    }
+
+    function male(p) {
+        return p.sex == "m";
+    }
+
+    function female(p) {
+        return p.sex == "f";
+    }
 
     console.log(average(ancestry.filter(male).map(age)));
-// → 61.67
+    // → 61.67
     console.log(average(ancestry.filter(female).map(age)));
-// → 54.56
+    // → 54.56
 
     //flattening
-    var arrays = [[1, 2, 3], [4, 5], [6]];
-    console.log(arrays.reduce(function(min, cur) {
+    var arrays = [
+        [1, 2, 3],
+        [4, 5],
+        [6]
+    ];
+    console.log(arrays.reduce(function (min, cur) {
         return min.concat(cur);
     }));
 
@@ -151,18 +172,23 @@
 
     // Your code here.
     function every(arr, f) {
-        for(var i=0; i < arr.length; i++) {
-            if(!f(arr[i])) return false;
+        for (var i = 0; i < arr.length; i++) {
+            if (!f(arr[i])) {
+                return false;
+            }
         }
         return true;
     }
 
     function some(arr, f) {
-        for(var i=0; i < arr.length; i++) {
-            if(f(arr[i])) return true;
+        for (var i = 0; i < arr.length; i++) {
+            if (f(arr[i])) {
+                return true;
+            }
         }
         return false;
     }
+
     console.log(every([NaN, NaN, NaN], isNaN));
     // → true
     console.log(every([NaN, NaN, 4], isNaN));
@@ -177,7 +203,7 @@
     var v = [5, 2, 16, 4, 3, 18, 20];
     var res;
 
-    res = v.every(function(element, index, array) {
+    res = v.every(function (element, index, array) {
         console.log("element:", element);
         if (element >= THRESHOLD) {
             return false;
@@ -192,7 +218,7 @@
     // element: 16
     // res: false
 
-    res = v.some(function(element, index, array) {
+    res = v.some(function (element, index, array) {
         console.log("element:", element);
         if (element >= THRESHOLD) {
             return true;
@@ -207,4 +233,4 @@
     // element: 16
     // res: true
 
-} ());
+}());
