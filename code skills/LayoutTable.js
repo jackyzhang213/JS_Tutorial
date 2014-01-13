@@ -2,6 +2,15 @@
  * Problem: given an array of arrays of table cells, builds up a string that contains a nicely
  *          laid out table—meaning that the columns are straight and the rows are aligned.
  *
+ *          name           height country
+            -------------- ------ -------------
+            Kilimanjaro      5895 Tanzania
+            Everest          8848 Nepal
+            Mount Fuji       3776 Japan
+            Mont Blanc       4808 Italy/France
+            Vaalserberg       323 Netherlands
+            Mount McKinley   6168 United States
+            Popocatepetl     5465 Mexico
  * User: JackyZhang213
  * Date: 14-1-10
  */
