@@ -27,6 +27,10 @@
         {name: "Popocatepetl", height: 5465, country: "Mexico"}
     ];
 
+    /*
+     this function is used to calculated the row height. cell.minHeight is a polymorphism sample.
+     @rows [[UnderLinedCell, UnderLinedCell, UnderLinedCell], [TextCell, TextCell, TextCell] ...]
+     */
     function rowHeights(rows) {
         return rows.map(function (row) {
             return row.reduce(function (max, cell) {
@@ -35,6 +39,10 @@
         });
     }
 
+    /*
+     this function is used to calculated the column width. we use row[0] is because we just want to use
+     the index. In this sample, we just want to loop the first row(three columns)
+     */
     function colWidths(rows) {
         return rows[0].map(function (_, i) {
             return rows.reduce(function (max, row) {
@@ -47,16 +55,33 @@
         var heights = rowHeights(rows);
         var widths = colWidths(rows);
 
+        /*
+         this function is used to join each block with one space,
+         @blocks like ["Everest       ", "8848  ", "Nepal        "]
+         @lineNo 0, for header, contains two lines, so the line No should be 0, 1
+         */
         function drawLine(blocks, lineNo) {
+            //console.log("Return from drawLine:", blocks.map(function (block) {
+            //  return block[lineNo];
+            //}).join(" "));
             return blocks.map(function (block) {
                 return block[lineNo];
             }).join(" ");
         }
 
+        /*
+         this function convert each cell with correct align.
+         @row [TextCell, TextCell, TextCell] or [UnderlinedCell, UnderlinedCell, UnderlinedCell]
+
+         for header, blocks convert to [["name    ", "--------"], ["height", "-----"], ["country     ","-------"]]
+         for body, blocks convert to [["Kilimanjaro   "], ["5895  "], ["Tanzania    "]]
+         */
         function drawRow(row, rowNum) {
+            //console.log("row:", row);
             var blocks = row.map(function (cell, colNum) {
                 return cell.draw(widths[colNum], heights[rowNum]);
             });
+            //console.log("blocks:", blocks);
             return blocks[0].map(function (_, lineNo) {
                 return drawLine(blocks, lineNo);
             }).join("\n");
@@ -118,6 +143,7 @@
                 return new TextCell(String(row[name]));
             });
         });
+        console.log("Return from dataTable", [headers].concat(body));
         return [headers].concat(body);
     }
 
