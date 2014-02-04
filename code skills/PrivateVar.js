@@ -7,13 +7,14 @@
 (function () {
     function Ninja() {
         var feints = 0;
-        this.getFeints = function(){
-        return feints;
+        this.getFeints = function () {
+            return feints;
         };
-    this.feint = function(){
-        feints++;
+        this.feint = function () {
+            feints++;
         };
     }
+
     var ninja = new Ninja();
     ninja.feint();
     if (ninja.getFeints() === 1) {
