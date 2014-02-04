@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Listing 5.5</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+</head>
+<body>
+/**
+* Problem: Using Closure from Callback for an Ajax request.
+*
+* User: JackyZhang213
+* Date: 14-2-4
+*/
+
+<div id="testSubject"></div>
+
+<button type="button" id="testButton">Go!</button>
+
+<script>
+    jQuery('#testButton').click(function () {                          //#1
+
+        var elem$ = jQuery("#testSubject");                            //#2
+
+        elem$.html("Loading...");                                      //#3
+
+
+        /*
+         Within the argument list passed to the jQuery ajax() method, we define a callback
+         to be called when the Ajax request returns its response from the server. The response
+         text is passed to the callback in the html parameter, which we inject into the <div>
+         element through the elem$ variable in the closure
+
+         The success callback function is a parameter for .ajax().
+         */
+        jQuery.ajax({
+            url: "test.html",
+            success: function (html) {                                     //#4
+                /*
+                 we define an anonymous function to serve as the response callback. Within this callback,
+                 we reference the elem$ variable via the closure and use it to stuff the response text into the <div>.
+                 */
+                if (elem$) {
+                    console.log("We can see elem$, via the closure for this callback.");
+                }
+                elem$.html(html);
+            }
+        });
+
+    });
+</script>
+
+</body>
+</html>
