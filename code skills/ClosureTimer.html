@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Closure Timmer</title>
+    <style type="text/css">
+        #box { position: absolute; border: 3px solid blue; width: 200px; height: 200px; background-color: #6495ed; font-size: 2em; }
+    </style>
+</head>
+<body>
+<div id="box">Fighting!</div>                               <!--#1-->
+
+<script type="text/javascript">
+
+    function animateIt(elementId) {
+
+        var elem = document.getElementById(elementId);              //#2
+        var tick = 0;                                               //#3
+
+        var timer = setInterval(function(){                         //#4
+            // this anonymous function access the element DOM, tick and timer reference by closure
+            // If we move the variables to the global scope, it will still works for this example.
+            // But if we add more element to animate as same time, it will cause some problem. All elements
+            // reference to the same global variables. But it works if the variables are in function scope.
+
+            // this exercises shows the closure isn’t simply a snapshot of the state of the scope at the time of
+            // creation, but an active encapsulation of that state that can be modified as long as the
+            // closure exists.
+
+            if (tick < 100) {
+                elem.style.left = elem.style.top = tick + "px";
+                tick++;
+            }
+            else {
+                clearInterval(timer);
+                if(tick == 100) {
+                    console.log("Tick accessed via a closure.");
+                }                                      //#5
+                if(elem) {
+                    console.log("Element also accessed via a closure.");
+                }
+                if(timer) {
+                    console.log("Timer reference also obtained via a closure.");
+                }
+            }
+        }, 10);
+
+    }
+
+    animateIt('box');                                               //#6
+
+</script>
+</body>
+</html>
