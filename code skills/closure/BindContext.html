@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Binding Context</title>
+    <script type="text/javascript" src="../scripts/assert.js"></script>
+    <link href="../styles/assert.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<button id="test">Click Me!</button>                             <!--#1-->
+
+<script>
+    var button = {                                                 //#2
+        clicked: false,
+        click: function(){                                           //#3
+            this.clicked = true;
+            assert(button.clicked,"The button has been clicked");      //#4
+            console.log(this);
+        }
+    };
+
+    /**
+     *  we use apply to bind the context, in this case, is the button object.
+     *  This method is designed to create and return a new anonymous function that calls the original
+     *  function, using apply(), so that we can force the context to be whatever object we want.
+     */
+    function bind(context,name){
+        return function(){
+            return context[name].apply(context,arguments);
+        };
+    }
+
+    var elem = document.getElementById("test");
+    /**
+     * if we don't bind the context, "this" in button.click will reference to button element.
+     */
+    elem.addEventListener("click",button.click,false);
+
+    /**
+     * when the button is clicked, that anonymous function will be invoked,
+     * which will in turn call the click method,  forcing the context to be the button object.
+     * The anonymous function serves as an event handling proxy for the “real” handler,
+     * which is identified though parameters bound to the closure.
+     */
+    //elem.addEventListener("click",bind(button,"click"),false);
+
+    /**
+     * Remember, the underlying purpose is controlling the context for delayed execution via the anonymous
+     * function and closure. This important distinction makes apply() and call() especially
+     * useful for delayed execution callbacks for event handlers and timers. In short, bind() used to closure
+     * the current context, apply() or call() used to set the context.
+     */
+
+</script>
+
+</body>
+</html>
+
