@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Partially Applying functions</title>
+    <script type="text/javascript" src="../scripts/assert.js"></script>
+    <link href="../styles/assert.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<script type="text/javascript">
+
+    Function.prototype.partial = function() {
+        //using closure to remember state, transfer to the newly constructed function.
+        var fn = this, args = Array.prototype.slice.call(arguments);
+        return function() {
+            var arg = 0;
+            //fill in any missing argument from a given function, not just those
+            //at the beginning of the argument list
+            for (var i = 0; i < args.length && arg < arguments.length; i++) {
+                if (args[i] === undefined) {
+                    args[i] = arguments[arg++];
+                }
+            }
+            for ( var j = arg; j < arguments.length; j++) {
+                args[args.length] = arguments[j];
+            }
+            return fn.apply(this, args);
+        };
+    };
+
+    Math.maxAbove500 = Math.max.partial(undefined, 500);
+
+    assert(Math.maxAbove500(3,4,1,6) == 500, "Max of 500, 3, 4, 1, 6 is 500"); //#4
+    assert(Math.maxAbove500(3,4,11223,1,6) == 11223, "Max of 500, 3, 4, 11223, 1, 6 is 11223");      //#4
+    assert(Math.maxAbove500(3,4,1,6, 12345) == 12345, "Max of 12345, 3, 4, 1, 6 is 12345"); //#4
+
+</script>
+</body>
+</html>
